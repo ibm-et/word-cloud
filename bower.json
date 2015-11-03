@@ -1,0 +1,24 @@
+{
+  "name": "word-cloud",
+  "version": "0.0.1",
+  "description": "A polymer element that displays a word cloud",
+  "main": "word-cloud.html",
+  "keywords": [
+    "word",
+    "word cloud",
+    "web-components"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "d3-cloud": "latest",
+    "d3": "^3"
+  },
+  "private": true
+}

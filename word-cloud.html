@@ -1,0 +1,94 @@
+<!--
+# (c) Copyright Jupyter Development Team
+# (c) Copyright IBM Corp. 2015
+-->
+<link rel='import' href='../polymer/polymer.html'>
+<script src="../d3/d3.min.js"></script>
+<script src="../d3-cloud/build/d3.layout.cloud.js"></script>
+
+<dom-module id="word-cloud">
+    <template>
+        <style>
+          :host {
+            display: block;
+            height: 100%;
+            width: 100%;
+          }
+        </style>
+        <div id="container">
+          <svg style='height:500px'></svg>
+        </div>
+        <content></content>
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+        'use strict';
+
+        Polymer({
+            is: 'word-cloud',
+            properties: {
+              data: {
+                type: Array,
+                observer: '_dataChanged'
+              }
+            },
+
+            behaviors: [
+              Polymer.IronResizableBehavior
+            ],
+
+            listeners: {
+              'iron-resize': '_resize'
+            },
+
+            _dataChanged: function(newData) {
+              if (!newData) { return; }
+              //TODO
+            },
+
+            _resize: function() {
+              //TODO
+            },
+
+            ready: function() {
+var fill = d3.scale.category20();
+
+var layout = d3.layout.cloud()
+    .size([500, 500])
+    .words([
+      "Hello", "world", "normally", "you", "want", "more", "words",
+      "than", "this"].map(function(d) {
+      return {text: d, size: 10 + Math.random() * 90, test: "haha"};
+    }))
+    .padding(5)
+    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+    .font("Impact")
+    .fontSize(function(d) { return d.size; })
+    .on("end", draw);
+
+layout.start();
+
+function draw(words) {
+  d3.select(this.$.container).select('svg')
+      .attr("width", layout.size()[0])
+      .attr("height", layout.size()[1])
+    .append("g")
+      .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+    .selectAll("text")
+      .data(words)
+    .enter().append("text")
+      .style("font-size", function(d) { return d.size + "px"; })
+      .style("font-family", "Impact")
+      .style("fill", function(d, i) { return fill(i); })
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) {
+        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+      })
+      .text(function(d) { return d.text; });
+}
+            }
+        });
+    })();
+</script>
