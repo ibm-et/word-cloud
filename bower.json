@@ -18,7 +18,8 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0",
     "d3-cloud": "latest",
-    "d3": "^3"
+    "d3": "^3",
+    "requirejs": "^2.1.0"
   },
   "private": true
 }
